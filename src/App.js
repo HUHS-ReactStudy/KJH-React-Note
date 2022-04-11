@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+const EventPractice = () => {
+  const [form, setForm] = useState({
+    username: "",
+    message: "",
+  });
+  //이 부분이 useState안에 객체를 넣은 코드
+
+  const { username, message } = form;
+  const onChange = (e) => {
+    const nextForm = {
+      ...form, // 기존의 form 내용을 이 자리에 복사한 뒤
+      [e.target.name]: e.target.value, // 원하는 값을 덮어 씌우기
+    };
+
+    //또 다른 새로 알게된 부분
+
+    setForm(nextForm);
+  };
+  const onClick = () => {
+    alert(username + ": " + message);
+    setForm({
+      username: "",
+      message: "",
+    });
+  };
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      onClick();
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>이벤트 연습</h1>
+      <input
+        type="text"
+        name="username"
+        placeholder="사용자명"
+        value={username}
+        onChange={onChange}
+      />
+      <input
+        type="text"
+        name="message"
+        placeholder="아무거나 입력해 보세요"
+        value={message}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+      />
+      <button onClick={onClick}>확인</button>
     </div>
   );
-}
-
-export default App;
+};
+export default EventPractice;
